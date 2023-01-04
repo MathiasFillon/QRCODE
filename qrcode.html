@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Créer ton QRCODE</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="qrcode_css.css">
+  </head>
+  <body>
+    <form id="form">
+        <label for="url">URL :</label><br>
+        <input type="text" id="url" name="url"><br>
+        <button type="submit" id="submit">Générer QR code</button>
+        <label for="filename">Nom de fichier :</label><br>
+        <input type="text" id="filename" name="filename"><br>
+        <a id="download" download="qr-code.png">Télécharger QR code</a>
+    </form> 
+    <canvas id="qr-code"></canvas>
+    <script>
+        document.getElementById('form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          var url = document.getElementById('url').value;
+          var canvas = document.getElementById('qr-code');
+          var qr = new QRious({
+              element: canvas,
+              value: url
+          });
+        });
+
+        document.getElementById('download').addEventListener('click', function() {
+          var canvas = document.getElementById('qr-code');
+          var url = canvas.toDataURL();
+          this.href = url;
+        });
+        document.getElementById('download').addEventListener('click', function() {
+          var filename = document.getElementById('filename').value;
+          if (filename.length === 0) {
+            // Si aucun nom de fichier n'a été saisi, utilisez la date courante comme nom de fichier par défaut
+            var now = new Date();
+            filename = "qr-code-" + now.toISOString();
+          }
+          // Ajoutez l'extension du fichier en fonction du format de l'image QR code que vous générez
+          filename += ".png";
+          document.getElementById('download').setAttribute('download', filename);
+        });
+    </script>
+  </body>
+</html>
