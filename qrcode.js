@@ -6,7 +6,8 @@ document.getElementById('form').addEventListener('submit', function(e) {
         element: canvas,
         value: url
     });
-  });
+});
+
 
 document.getElementById('download').addEventListener('click', function() {
   var canvas = document.getElementById('qr-code');
